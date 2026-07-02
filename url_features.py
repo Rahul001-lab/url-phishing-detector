@@ -1,6 +1,7 @@
 import validators
 import ipaddress
 from urllib.parse import urlparse
+import re
 
 # Validate URL
 
@@ -96,3 +97,23 @@ def check_hyphen(url):
 
     else:
         return 20, f"Domain contains many hyphens ({hyphen_count})."
+    
+    # Check Digits in Domain
+
+def check_digits(url):
+
+    hostname = urlparse(url).hostname
+
+    if hostname is None:
+        return 0, "Unable to check domain."
+
+    digits = re.findall(r'\d', hostname)
+
+    if len(digits) == 0:
+        return 0, "No digits found in domain."
+
+    elif len(digits) <= 2:
+        return 10, f"Domain contains {len(digits)} digit(s)."
+
+    else:
+        return 20, f"Domain contains many digits ({len(digits)})."

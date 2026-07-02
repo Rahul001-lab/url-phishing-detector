@@ -5,7 +5,8 @@ from url_features import (
     check_ip_address,
     check_at_symbol,
     check_dots,
-    check_hyphen
+    check_hyphen,
+    check_digits
 )
 
 def scan_url(url):
@@ -13,7 +14,7 @@ def scan_url(url):
     score = 0
     reasons = []
 
-    # Validate URL
+ # Validate URL
 
     if not validate_url(url):
 
@@ -25,7 +26,7 @@ def scan_url(url):
             ]
         }
 
-    # HTTPS Check
+ # HTTPS Check
 
     points, message = check_https(url)
 
@@ -39,21 +40,21 @@ def scan_url(url):
     score += points
     reasons.append(message)
 
-    # IP Address Check
+ # IP Address Check
 
     points, message = check_ip_address(url)
 
     score += points
     reasons.append(message)
 
-    # @ Symbol Check
+ # @ Symbol Check
 
     points, message = check_at_symbol(url)
 
     score += points
     reasons.append(message)
 
-    # Dot Check
+ # Dot Check
 
     points, message = check_dots(url)
 
@@ -63,6 +64,13 @@ def scan_url(url):
 # Hyphen Check
 
     points, message = check_hyphen(url)
+
+    score += points
+    reasons.append(message)
+
+# Digits Check
+
+    points, message = check_digits(url)
 
     score += points
     reasons.append(message)
