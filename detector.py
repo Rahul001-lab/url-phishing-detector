@@ -7,7 +7,8 @@ from url_features import (
     check_dots,
     check_hyphen,
     check_digits,
-    check_suspicious_keywords
+    check_suspicious_keywords,
+    check_url_shortener
 )
 
 def scan_url(url):
@@ -83,6 +84,12 @@ def scan_url(url):
     score += points
     reasons.append(message)
 
+# URL Shortener Check
+
+    points, message = check_url_shortener(url)
+
+    score += points
+    reasons.append(message)
 
     # Final Status
 

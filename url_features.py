@@ -153,3 +153,34 @@ def check_suspicious_keywords(url):
 
     else:
         return 30, f"Multiple suspicious keywords found: {', '.join(found_words)}."
+    
+    # Check URL Shortener
+
+def check_url_shortener(url):
+
+    shorteners = [
+        "bit.ly",
+        "tinyurl.com",
+        "goo.gl",
+        "t.co",
+        "is.gd",
+        "ow.ly",
+        "buff.ly",
+        "rebrand.ly",
+        "cutt.ly",
+        "shorturl.at"
+    ]
+
+    hostname = urlparse(url).hostname
+
+    if hostname is None:
+        return 0, "Unable to check URL shortener."
+
+    hostname = hostname.lower()
+
+    for shortener in shorteners:
+
+        if shortener == hostname:
+            return 25, f"URL uses a shortening service ({shortener})."
+
+    return 0, "No URL shortening service detected."
