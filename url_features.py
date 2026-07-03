@@ -117,3 +117,39 @@ def check_digits(url):
 
     else:
         return 20, f"Domain contains many digits ({len(digits)})."
+
+        # Check Suspicious Keywords
+
+def check_suspicious_keywords(url):
+
+    suspicious_words = [
+        "login",
+        "verify",
+        "secure",
+        "update",
+        "account",
+        "banking",
+        "password",
+        "signin",
+        "confirm",
+        "wallet",
+        "payment"
+    ]
+
+    url = url.lower()
+
+    found_words = []
+
+    for word in suspicious_words:
+
+        if word in url:
+            found_words.append(word)
+
+    if len(found_words) == 0:
+        return 0, "No suspicious keywords found."
+
+    elif len(found_words) <= 2:
+        return 15, f"Suspicious keywords found: {', '.join(found_words)}."
+
+    else:
+        return 30, f"Multiple suspicious keywords found: {', '.join(found_words)}."

@@ -6,7 +6,8 @@ from url_features import (
     check_at_symbol,
     check_dots,
     check_hyphen,
-    check_digits
+    check_digits,
+    check_suspicious_keywords
 )
 
 def scan_url(url):
@@ -71,6 +72,13 @@ def scan_url(url):
 # Digits Check
 
     points, message = check_digits(url)
+
+    score += points
+    reasons.append(message)
+
+# Suspicious Keywords Check
+
+    points, message = check_suspicious_keywords(url)
 
     score += points
     reasons.append(message)
