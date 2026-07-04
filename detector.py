@@ -8,7 +8,8 @@ from url_features import (
     check_hyphen,
     check_digits,
     check_suspicious_keywords,
-    check_url_shortener
+    check_url_shortener,
+    check_double_slash
 )
 
 def scan_url(url):
@@ -91,7 +92,14 @@ def scan_url(url):
     score += points
     reasons.append(message)
 
-    # Final Status
+# Double Slash Check
+
+    points, message = check_double_slash(url)
+
+    score += points
+    reasons.append(message)
+
+ # Final Status
 
     if score == 0:
         status = "Safe"

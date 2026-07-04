@@ -184,3 +184,14 @@ def check_url_shortener(url):
             return 25, f"URL uses a shortening service ({shortener})."
 
     return 0, "No URL shortening service detected."
+
+    # Check Double Slash
+
+def check_double_slash(url):
+
+    position = url.rfind("//")
+
+    if position > 7:
+        return 15, "Extra double slash found in URL."
+
+    return 0, "No extra double slash found."
