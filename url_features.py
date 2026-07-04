@@ -195,3 +195,32 @@ def check_double_slash(url):
         return 15, "Extra double slash found in URL."
 
     return 0, "No extra double slash found."
+
+# Check Suspicious TLD
+
+def check_suspicious_tld(url):
+
+    suspicious_tlds = [
+        ".xyz",
+        ".top",
+        ".click",
+        ".gq",
+        ".cf",
+        ".ml",
+        ".tk",
+        ".work",
+        ".zip"
+    ]
+
+    hostname = urlparse(url).hostname
+
+    if hostname is None:
+        return 0, "Unable to check TLD."
+
+    for tld in suspicious_tlds:
+
+        if hostname.endswith(tld):
+            return 20, f"Suspicious TLD detected ({tld})."
+
+    return 0, "No suspicious TLD detected."
+

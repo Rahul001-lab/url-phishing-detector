@@ -9,7 +9,8 @@ from url_features import (
     check_digits,
     check_suspicious_keywords,
     check_url_shortener,
-    check_double_slash
+    check_double_slash,
+    check_suspicious_tld
 )
 
 def scan_url(url):
@@ -95,6 +96,13 @@ def scan_url(url):
 # Double Slash Check
 
     points, message = check_double_slash(url)
+
+    score += points
+    reasons.append(message)
+
+# Suspicious TLD Check
+
+    points, message = check_suspicious_tld(url)
 
     score += points
     reasons.append(message)
