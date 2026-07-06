@@ -1,4 +1,5 @@
 from url_features import (
+    check_encoded_characters,
     validate_url,
     check_https,
     check_url_length,
@@ -10,7 +11,8 @@ from url_features import (
     check_suspicious_keywords,
     check_url_shortener,
     check_double_slash,
-    check_suspicious_tld
+    check_suspicious_tld,
+    check_encoded_characters
 )
 
 def scan_url(url):
@@ -103,6 +105,12 @@ def scan_url(url):
 # Suspicious TLD Check
 
     points, message = check_suspicious_tld(url)
+
+    score += points
+    reasons.append(message)
+
+# Encoded Character Check
+    points, message = check_encoded_characters(url)
 
     score += points
     reasons.append(message)

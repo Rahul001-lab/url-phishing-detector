@@ -224,3 +224,31 @@ def check_suspicious_tld(url):
 
     return 0, "No suspicious TLD detected."
 
+# Encoded Character Detection
+
+#def check_encoded_characters(url):
+    encoded_pattern = re.compile(r'%[0-9A-Fa-f]{2}')
+
+ #   if encoded_pattern.findall(url):
+    #    return 15, "URL contains encoded characters."
+
+    #return 0, "No encoded characters found."
+
+# Encoded Character Detection
+
+def check_encoded_characters(url):
+
+    encoded_pattern = re.compile(r'%[0-9A-Fa-f]{2}')
+
+    matches = encoded_pattern.findall(url)
+
+    count = len(matches)
+
+    if count == 0:
+        return 0, "No encoded characters found."
+
+    elif count <= 2:
+        return 10, f"URL contains {count} encoded character(s)."
+
+    else:
+        return 20, f"URL contains multiple encoded characters ({count})."
