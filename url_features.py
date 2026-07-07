@@ -252,3 +252,16 @@ def check_encoded_characters(url):
 
     else:
         return 20, f"URL contains multiple encoded characters ({count})."
+
+# Redirect Detection
+
+def check_redirects(url):
+    parsed_url = urlparse(url)
+
+    if parsed_url.fragment:
+        return 15, "URL contains a fragment (possible redirect)."
+
+    if parsed_url.query:
+        return 10, "URL contains query parameters (possible redirect)."
+
+    return 0, "No redirects detected."
