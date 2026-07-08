@@ -12,7 +12,8 @@ from url_features import (
     check_url_shortener,
     check_double_slash,
     check_suspicious_tld,
-    check_encoded_characters
+    check_encoded_characters,
+    check_redirects
 )
 
 def scan_url(url):
@@ -111,6 +112,13 @@ def scan_url(url):
 
 # Encoded Character Check
     points, message = check_encoded_characters(url)
+
+    score += points
+    reasons.append(message)
+
+# Redirects Check
+
+    points, message = check_redirects(url)
 
     score += points
     reasons.append(message)
