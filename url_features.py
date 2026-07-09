@@ -2,6 +2,8 @@ import validators
 import ipaddress
 from urllib.parse import urlparse
 import re
+import requests
+from urllib.parse import urlparse
 
 # Validate URL
 
@@ -255,13 +257,42 @@ def check_encoded_characters(url):
 
 # Redirect Detection
 
-def check_redirects(url):
+#def check_redirects(url):
     parsed_url = urlparse(url)
 
-    if parsed_url.fragment:
-        return 15, "URL contains a fragment (possible redirect)."
+ #   if parsed_url.fragment:
+  #      return 15, "URL contains a fragment (possible redirect)."
 
-    if parsed_url.query:
-        return 10, "URL contains query parameters (possible redirect)."
+   # if parsed_url.query:
+    #    return 10, "URL contains query parameters (possible redirect)."
 
-    return 0, "No redirects detected."
+    #return 0, "No redirects detected."
+
+def check_redirects(url):
+
+    try:
+
+        response = requests.get(url, timeout=5)
+
+        redirect_history = response.history
+
+        redirect_count = len(redirect_history)
+
+        if redirect_count == 0:
+            return 0, "No redirects detected."
+
+        original_host = urlparse(url).hostname
+        final_host = urlparse(response.url).hostname
+
+    # Normal HTTP → HTTPS redirect on the same domain
+
+        if original_host == final_host:
+            return 0, "Redirected to HTTPS on the same domain."
+
+    # Redirect to another domain
+
+        return 20, f"URL redirected {redirect_count} time(s) to another domain."
+
+    except requests.exceptions.RequestException:
+
+        return 10, "Unable to check redirects."
