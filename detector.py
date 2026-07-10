@@ -13,7 +13,8 @@ from url_features import (
     check_double_slash,
     check_suspicious_tld,
     check_encoded_characters,
-    check_redirects
+    check_redirects,
+    check_punycode_domain
 )
 
 def scan_url(url):
@@ -121,6 +122,13 @@ def scan_url(url):
     points, message = check_redirects(url)
 
     score += points
+    reasons.append(message)
+
+# Unicode/Punycode Detection
+
+    points, message= check_punycode_domain(url)
+
+    score +=points
     reasons.append(message)
 
  # Final Status

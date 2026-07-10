@@ -296,3 +296,17 @@ def check_redirects(url):
     except requests.exceptions.RequestException:
 
         return 10, "Unable to check redirects."
+
+#unicode/Punycode Detection   
+
+def check_punycode_domain(url):
+
+    hostname = urlparse(url).hostname
+
+    if hostname is None:
+        return 0, "Unable to check domain."
+
+    if "xn--" in hostname:
+        return 20, "Punycode domain detected."
+
+    return 0, "No Punycode domain detected."
