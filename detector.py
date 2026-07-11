@@ -1,4 +1,5 @@
 from url_features import (
+    check_domain_age,
     check_encoded_characters,
     validate_url,
     check_https,
@@ -131,6 +132,12 @@ def scan_url(url):
     score +=points
     reasons.append(message)
 
+# Check domain age using whois
+    points,message = check_domain_age(url)
+    
+    score += points
+    reasons.append(message)
+    
  # Final Status
 
     if score == 0:

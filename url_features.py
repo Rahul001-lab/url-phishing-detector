@@ -4,6 +4,8 @@ from urllib.parse import urlparse
 import re
 import requests
 from urllib.parse import urlparse
+from datetime import datetime
+import whois
 
 # Validate URL
 
@@ -310,3 +312,36 @@ def check_punycode_domain(url):
         return 20, "Punycode domain detected."
 
     return 0, "No Punycode domain detected."
+
+# Check domain age using whois(pip intall python-whois)
+
+def check_domain_age(url):
+
+    hostname = urlparse(url).hostname
+
+    if hostname is None:
+        return 0, "Unable to check domain age."
+
+    try:
+
+        domain_info = whois.whois(hostname)
+
+        creation_date = domain_info.creation_date
+
+        if creation_date is None:
+            return 0, "Unable to determine domain age."
+
+        if isinstance(creation_date, list):
+            creation_date = creation_date[0]
+
+        current_date = datetime.now()
+
+        domain_age_days = (current_date - creation_date).days
+
+        if domain_age_days < 180:
+            return 20, f"Domain age is less than 6 months ({domain_age_days} days)."
+
+        return 0, f"Domain age is {domain_age_days} days (appears established)."
+
+    except Exception:
+        return 0, "Unable to check domain age."
