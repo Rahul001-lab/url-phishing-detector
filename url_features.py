@@ -334,7 +334,7 @@ def check_domain_age(url):
         if isinstance(creation_date, list):
             creation_date = creation_date[0]
 
-        current_date = datetime.now()
+        current_date = datetime.now(creation_date.tzinfo)
 
         domain_age_days = (current_date - creation_date).days
 
