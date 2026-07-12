@@ -286,10 +286,13 @@ def check_redirects(url):
         original_host = urlparse(url).hostname
         final_host = urlparse(response.url).hostname
 
+        original_host = original_host.replace("www.", "")
+        final_host = final_host.replace("www.", "")
+
     # Normal HTTP → HTTPS redirect on the same domain
 
         if original_host == final_host:
-            return 0, "Redirected to HTTPS on the same domain."
+            return 0, "Redirected on the same domain."
 
     # Redirect to another domain
 
