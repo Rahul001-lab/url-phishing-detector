@@ -1,4 +1,5 @@
 from url_features import (
+    check_dns_resolution,
     check_domain_age,
     check_encoded_characters,
     validate_url,
@@ -133,11 +134,19 @@ def scan_url(url):
     reasons.append(message)
 
 # Check domain age using whois
+   
     points,message = check_domain_age(url)
     
     score += points
     reasons.append(message)
-    
+
+ # DNS Resolution Check
+
+    points,message = check_dns_resolution(url)
+
+    score += points
+    reasons.append(message)
+      
  # Final Status
 
     if score == 0:

@@ -6,6 +6,7 @@ import requests
 from urllib.parse import urlparse
 from datetime import datetime
 import whois
+import socket
 
 # Validate URL
 
@@ -348,3 +349,20 @@ def check_domain_age(url):
 
     except Exception:
         return 0, "Unable to check domain age."
+
+# DNS Resolution Check
+
+def check_dns_resolution(url):
+
+    hostname =urlparse(url).hostname
+
+    if hostname is None:
+        return 0, "Unable to check DNS resolution."
+
+    try:
+        resolved_ip = socket.gethostbyname(hostname)
+        return 0, f"DNS resolution successful. Resolved IP: {resolved_ip}"
+    
+
+    except socket.gaierror:
+        return 20, "DNS resolution failed."
