@@ -1,147 +1,160 @@
 # 🛡️ URL Phishing Detector
 
-A Python-based desktop application that detects potentially malicious URLs using rule-based phishing detection techniques. The application features a modern graphical interface built with CustomTkinter and analyzes URLs using multiple security checks to determine their risk level.
+A Python-based phishing URL detector that analyzes URLs using multiple cybersecurity techniques. The tool assigns a risk score based on various security checks and provides detailed explanations for why a URL is considered safe or suspicious.
+
+This project was built to strengthen Python programming, networking, and cybersecurity concepts while following a modular software design.
 
 ---
 
-## ✨ Features
+## 🚀 Features
 
-* Modern CustomTkinter GUI
-* URL validation
-* HTTPS detection
-* URL length analysis
-* IP address detection
-* @ symbol detection
-* Dot count analysis
-* Hyphen detection
-* Risk score calculation
-* Detailed scan results
+- ✅ URL Validation
+- ✅ HTTPS Detection
+- ✅ URL Length Analysis
+- ✅ IP Address Detection
+- ✅ '@' Symbol Detection
+- ✅ Multiple Dot Detection
+- ✅ Hyphen Detection
+- ✅ Digit Detection
+- ✅ Suspicious Keyword Detection
+- ✅ URL Shortener Detection
+- ✅ Double Slash Detection
+- ✅ Suspicious Top-Level Domain (TLD) Detection
+- ✅ Encoded Character Detection
+- ✅ Redirect Detection
+- ✅ Unicode/Punycode Detection
+- ✅ WHOIS Domain Age Detection
+- ✅ DNS Resolution Check
+- ✅ Risk Score Calculation
+- ✅ Detailed Security Report
 
 ---
 
-## 🚀 Technologies Used
+## 🖥️ Technologies Used
 
-* Python 3.14
-* CustomTkinter
-* Requests
-* Validators
-* tldextract
+- Python 3
+- Requests
+- urllib.parse
+- python-whois
+- socket
+- datetime
+- Regular Expressions (re)
+- Git & GitHub
 
 ---
 
-## 📁 Project Structure
+## 📂 Project Structure
 
-```text
-URL Phishing Detector/
+```
+URL-Phishing-Detector/
 │
-├── assets/
-├── screenshots/
-├── venv/
-│
-├── main.py
-├── detector.py
-├── url_features.py
-├── requirements.txt
-├── README.md
-└── .gitignore
+├── main.py              # User interface and program entry point
+├── detector.py          # Risk scoring engine
+├── url_features.py      # Individual phishing detection features
+├── requirements.txt     # Required Python libraries
+└── README.md
 ```
 
 ---
 
 ## ⚙️ Installation
 
-### 1. Clone the repository
+### Clone the repository
 
 ```bash
-git clone https://github.com/Rahul001-lab/url-phishing-detector.git
+git clone https://github.com/YOUR_USERNAME/url-phishing-detector.git
 ```
 
-### 2. Open the project folder
+### Navigate into the project
 
 ```bash
 cd url-phishing-detector
 ```
 
-### 3. Create a virtual environment
+### Install dependencies
 
 ```bash
-py -m venv venv
+pip install requests python-whois
 ```
 
-### 4. Activate the virtual environment
-
-**Windows (PowerShell)**
-
-```powershell
-.\venv\Scripts\Activate.ps1
-```
-
-**Windows (Command Prompt)**
-
-```cmd
-venv\Scripts\activate
-```
-
-### 5. Install dependencies
+### Run the application
 
 ```bash
-py -m pip install -r requirements.txt
-```
-
-### 6. Run the application
-
-```bash
-py main.py
+python main.py
 ```
 
 ---
 
-## 🔍 Current Detection Rules
+## 📋 Example Output
 
-* URL Validation
-* HTTPS Check
-* URL Length Check
-* IP Address Detection
-* @ Symbol Detection
-* Dot Count Detection
-* Hyphen Detection
+```
+Status: Suspicious
 
----
+Risk Score: 35/100
 
-## 📌 Planned Features
+Reasons:
 
-* Digits in Domain Detection
-* Suspicious Keyword Detection
-* URL Shortener Detection
-* Suspicious TLD Detection
-* Double Slash Detection
-* Encoded Character Detection
-* Unicode Domain Detection
-* WHOIS Domain Age Analysis
-* SSL Certificate Validation
-* Redirect Detection
-* DNS Analysis
-* Scan History
-* PDF Report Export
-* Machine Learning Based Detection
+• Uses HTTPS connection.
+• URL length is normal.
+• URL uses a domain name.
+• No '@' symbol found.
+• No suspicious keywords detected.
+• DNS resolved successfully.
+• Resolved IP: 142.xxx.xxx.xxx
+• Domain age is 4520 days (appears established).
+```
 
 ---
 
-## 📷 Screenshots
+## 🧠 Detection Techniques
 
-Screenshots will be added after the project is completed.
+The detector performs multiple security checks, including:
+
+- URL structure analysis
+- HTTPS verification
+- Domain age verification using WHOIS
+- DNS resolution
+- Redirect analysis
+- Unicode/Punycode detection
+- URL encoding detection
+- Suspicious keyword analysis
+- Suspicious TLD detection
+- URL shortener detection
+- IP address detection
+- Character pattern analysis
+
+Each check contributes to the final phishing risk score.
 
 ---
 
-## 🤝 Contributing
+## 📈 Future Improvements
 
-Contributions, suggestions, and improvements are welcome. Feel free to fork the repository and submit a pull request.
+- 🔒 SSL Certificate Validation
+- 🌐 Suspicious Subdomain Detection
+- 🛡️ VirusTotal API Integration
+- 📄 PDF Scan Reports
+- 🎨 Improved GUI
+- 🤖 Machine Learning-Based Detection
+- 🌍 Blacklist Database Integration
 
 ---
 
-## 📄 License
+## 🎯 Purpose
 
-This project is licensed under the MIT License.
+This project was developed to practice and improve:
+
+- Python Programming
+- Networking Fundamentals
+- Cybersecurity Concepts
+- Secure Coding Practices
+- Git & GitHub Workflow
+- Software Design
+
+---
+
+## ⚠️ Disclaimer
+
+This project is intended for educational purposes only. It should not be considered a replacement for professional security software or enterprise phishing detection solutions.
 
 ---
 
@@ -149,4 +162,4 @@ This project is licensed under the MIT License.
 
 **Rahul Tewatia**
 
-GitHub: https://github.com/Rahul001-lab
+If you found this project useful, consider giving it a ⭐ on GitHub!
