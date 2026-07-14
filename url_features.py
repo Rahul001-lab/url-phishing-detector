@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 from datetime import datetime
 import whois
 import socket
+import ssl
 
 # Validate URL
 
@@ -27,6 +28,34 @@ def check_https(url):
 
     return 20, "Does not use HTTPS."
 
+# Check SSL Certificate Validity
+
+def check_ssl_certificate(url):
+ 
+    hostname = urlparse(url).hostname
+
+    if hostname is None:
+        return 0, "Unable to check SSL certificate:"
+    
+    try:
+        context = ssl.create_default_context()
+
+        connection = socket.create_connection((hostname, 443))
+
+        secure_socket = context.wrap_socket(
+        connection,
+        server_hostname=hostname
+)
+    # sucess
+        return 0, "SSL certificate is valid."
+    
+    except ssl.SSLError: 
+        return 20, "Unable to establish SSL connection."
+   
+       
+
+
+
 
 # Check URL Length
 
@@ -43,7 +72,7 @@ def check_url_length(url):
     else:
         return 20, f"URL is very long ({length} characters)."
     
-    # Check IP Address
+ # Check IP Address
 
 def check_ip_address(url):
 
@@ -59,7 +88,7 @@ def check_ip_address(url):
 
         return 0, "URL uses a domain name."
     
-    # Check @ Symbol
+# Check @ Symbol
 
 def check_at_symbol(url):
 
@@ -83,7 +112,7 @@ def check_dots(url):
     else:
         return 20, f"URL contains too many dots ({dot_count})."
     
-    # Check Hyphens
+# Check Hyphens
 
 def check_hyphen(url):
 
@@ -103,7 +132,7 @@ def check_hyphen(url):
     else:
         return 20, f"Domain contains many hyphens ({hyphen_count})."
     
-    # Check Digits in Domain
+# Check Digits in Domain
 
 def check_digits(url):
 
@@ -123,7 +152,7 @@ def check_digits(url):
     else:
         return 20, f"Domain contains many digits ({len(digits)})."
 
-        # Check Suspicious Keywords
+# Check Suspicious Keywords
 
 def check_suspicious_keywords(url):
 
@@ -159,7 +188,7 @@ def check_suspicious_keywords(url):
     else:
         return 30, f"Multiple suspicious keywords found: {', '.join(found_words)}."
     
-    # Check URL Shortener
+# Check URL Shortener
 
 def check_url_shortener(url):
 
