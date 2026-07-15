@@ -40,23 +40,23 @@ def check_ssl_certificate(url):
     try:
         context = ssl.create_default_context()
 
-        connection = socket.create_connection((hostname, 443))
+        connection = socket.create_connection((hostname, 443),timeout=5 )
 
         secure_socket = context.wrap_socket(
         connection,
         server_hostname=hostname
 )
+        secure_socket.close()
+
     # sucess
         return 0, "SSL certificate is valid."
     
     except ssl.SSLError: 
-        return 20, "Unable to establish SSL connection."
+        return 20, "SSL certificate validation failed."
+    
+    except Exception:
+        return 20,"unable to establish SSL connection."
    
-       
-
-
-
-
 # Check URL Length
 
 def check_url_length(url):
@@ -219,7 +219,7 @@ def check_url_shortener(url):
 
     return 0, "No URL shortening service detected."
 
-    # Check Double Slash
+# Check Double Slash
 
 def check_double_slash(url):
 
@@ -376,9 +376,10 @@ def check_domain_age(url):
 
         return 0, f"Domain age is {domain_age_days} days (appears established)."
 
-    except Exception:
-        return 0, "Unable to check domain age."
-
+    except Exception as e:
+      print("WHOIS Error:", e)
+      return 0, "Unable to check domain age."
+    
 # DNS Resolution Check
 
 def check_dns_resolution(url):

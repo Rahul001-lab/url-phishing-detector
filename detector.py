@@ -2,6 +2,7 @@ from url_features import (
     check_dns_resolution,
     check_domain_age,
     check_encoded_characters,
+    check_ssl_certificate,
     validate_url,
     check_https,
     check_url_length,
@@ -39,6 +40,13 @@ def scan_url(url):
  # HTTPS Check
 
     points, message = check_https(url)
+
+    score += points
+    reasons.append(message)
+
+# Check SSL Certificate Validity
+
+    points, message = check_ssl_certificate(url)
 
     score += points
     reasons.append(message)
