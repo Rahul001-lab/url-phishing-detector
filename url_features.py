@@ -396,3 +396,45 @@ def check_dns_resolution(url):
 
     except socket.gaierror:
         return 20, "DNS resolution failed."
+
+# HTTP Security Headers Check
+
+def check_security_headers(url):
+
+    try:
+        response = requests.get(url, timeout=5)
+
+        headers = response.headers
+
+        security_headers = [
+            "Strict-Transport-Security",
+            "Content-Security-Policy",
+            "X-Content-Type-Options",
+            "X-Frame-Options",
+            "Referrer-Policy"
+        ]
+
+        missing_headers = []
+
+        present_headers = []
+
+        for header in security_headers:
+
+            if header  in headers:
+                present_headers.append(header)
+            else:
+                missing_headers.append(header)
+
+        missing_count = len(missing_headers)
+
+        if missing_count == 0:
+            return 0, f"All essential security headers are present: {', '.join(present_headers)}"
+
+        elif missing_count <= 2:
+            return 10, f"Missing security headers: {', '.join(missing_headers)}."
+
+        else:
+            return 20, f"Several important security headers are missing: {', '.join(missing_headers)}."
+
+    except requests.exceptions.RequestException:
+        return 10, "Unable to check security headers."
