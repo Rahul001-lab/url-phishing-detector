@@ -2,6 +2,7 @@ from url_features import (
     check_dns_resolution,
     check_domain_age,
     check_encoded_characters,
+    check_html_analysis,
     check_security_headers,
     check_ssl_certificate,
     validate_url,
@@ -160,6 +161,12 @@ def scan_url(url):
 
     points, message = check_security_headers(url)
 
+    score += points
+    reasons.append(message)
+
+# HTML Analysis check
+
+    points, message = check_html_analysis(url)
     score += points
     reasons.append(message)
 

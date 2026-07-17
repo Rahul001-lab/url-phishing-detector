@@ -8,6 +8,7 @@ from datetime import datetime
 import whois
 import socket
 import ssl
+import BeautifulSoup
 
 # Validate URL
 
@@ -438,3 +439,49 @@ def check_security_headers(url):
 
     except requests.exceptions.RequestException:
         return 10, "Unable to check security headers."
+    
+# HTML Analysis check
+
+def check_html_analysis(url):
+
+    try:
+        response = requests.get(url, timeout=5)
+
+        html_content = response.text
+
+        soup = BeautifulSoup(html_content, "html.parser")
+
+        risk_score = 0
+        messages = []
+
+        if input_type := soup.find_all("input", {"type": "password"}):
+            risk_score += 5
+            messages.append("Password input field detected in HTML.")
+        
+        iframes = soup.find_all("iframe")
+
+        for iframe in iframes:
+           style = iframe.get("style", "").replace(" ", "")
+           hidden = iframe.get("hidden")
+
+           if (
+               "display:none" in style
+                or "visibility:hidden" in style
+                or hidden is not None
+            ):
+              risk_score += 10
+              messages.append("Hidden iframe detected in HTML.")
+              break
+        
+        if javascript_redirect := soup.find_all("script", string=re.compile(r'window\.location\.href')):
+            risk_score += 10
+            messages.append("JavaScript redirect detected in HTML.")
+
+        if not messages:
+           return 0, "No suspicious HTML elements detected."
+       
+        return risk_score, "\n".join(messages)
+
+    except Exception:
+     return 10, "Unable to analyze HTML content."
+
