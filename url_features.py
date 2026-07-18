@@ -8,7 +8,7 @@ from datetime import datetime
 import whois
 import socket
 import ssl
-import BeautifulSoup
+from bs4 import BeautifulSoup 
 
 # Validate URL
 
@@ -184,10 +184,13 @@ def check_suspicious_keywords(url):
         return 0, "No suspicious keywords found."
 
     elif len(found_words) <= 2:
-        return 15, f"Suspicious keywords found: {', '.join(found_words)}."
+        return 5, f"Suspicious keywords found: {', '.join(found_words)}."
 
+    elif len(found_words) <= 4:
+        return 10, f"Multiple suspicious keywords found: {', '.join(found_words)}."
+    
     else:
-        return 30, f"Multiple suspicious keywords found: {', '.join(found_words)}."
+        return 15, f"Many suspicious keywords found: {', '.join(found_words)}."
     
 # Check URL Shortener
 
@@ -431,11 +434,20 @@ def check_security_headers(url):
         if missing_count == 0:
             return 0, f"All essential security headers are present: {', '.join(present_headers)}"
 
-        elif missing_count <= 2:
-            return 10, f"Missing security headers: {', '.join(missing_headers)}."
+        elif missing_count == 1:
+            return 3, f"Missing security headers: {', '.join(missing_headers)}."
 
+        elif missing_count == 2:
+            return 6, f"Missing security headers: {', '.join(missing_headers)}."
+        
+        elif missing_count == 3:
+            return 10, f"Missing security headers: {', '.join(missing_headers)}."
+        
+        elif missing_count == 4:
+            return 12, f"Missing security headers: {', '.join(missing_headers)}."
+        
         else:
-            return 20, f"Several important security headers are missing: {', '.join(missing_headers)}."
+            return 15, f"Several important security headers are missing: {', '.join(missing_headers)}."
 
     except requests.exceptions.RequestException:
         return 10, "Unable to check security headers."
@@ -473,9 +485,11 @@ def check_html_analysis(url):
               messages.append("Hidden iframe detected in HTML.")
               break
         
-        if javascript_redirect := soup.find_all("script", string=re.compile(r'window\.location\.href')):
-            risk_score += 10
-            messages.append("JavaScript redirect detected in HTML.")
+        # Redirects are causing false alarm for legitimate sites, so commenting out the following check for now
+
+       # if javascript_redirect := soup.find_all("script", string=re.compile(r'window\.location\.href')):
+           # risk_score += 10
+            #messages.append("JavaScript redirect detected in HTML.")
 
         if not messages:
            return 0, "No suspicious HTML elements detected."

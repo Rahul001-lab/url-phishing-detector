@@ -172,13 +172,16 @@ def scan_url(url):
 
  # Final Status
 
-    if score == 0:
+    if score <=10:
         status = "Safe"
 
-    elif score <= 40:
-        status = "Suspicious"
+    elif score <= 15:
+        status = "low Risk"
 
-    else:
+    elif score <= 40:
+        status = "Medium Risk"
+
+    else :
         status = "High Risk"
 
     return {
